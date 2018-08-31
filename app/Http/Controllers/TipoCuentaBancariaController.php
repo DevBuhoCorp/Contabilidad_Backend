@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TipoCuentaBancariaController extends Controller
 {
@@ -13,7 +14,7 @@ class TipoCuentaBancariaController extends Controller
      */
     public function index()
     {
-        $naturaleza = DB::select('CALL Sel_Naturaleza ("All",0);');
+        $naturaleza = DB::select('CALL sel_cuentarecursiva;');
         return json_encode($naturaleza);
     }
 
