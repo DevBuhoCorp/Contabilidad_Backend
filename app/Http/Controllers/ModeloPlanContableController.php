@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Modeloplancontable;
 
 
 class ModeloPlanContableController extends Controller
@@ -37,7 +38,9 @@ class ModeloPlanContableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $array [] = json_encode($request->all());
+        $modelopc = DB::insert('CALL Ins_ModeloPlanContable (?)',$array);
+        return json_encode($modelopc);
     }
 
     /**
@@ -71,7 +74,15 @@ class ModeloPlanContableController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        /*$array [] = json_encode($request->all());
+        $modelopc = DB::insert('CALL Ins_ModeloPlanContable (?)',$array);
+        return json_encode($modelopc);*/
+        $modelopc = Modeloplancontable::find($id);
+        $modelopc->modelo = $request->input('Modelo');
+        $modelopc->etiqueta = $request->input('Etiqueta');
+        $modelopc->estado = $request->input('Estado');
+        $modelopc->save();
+        return json_encode($modelopc);
     }
 
     /**
@@ -82,6 +93,9 @@ class ModeloPlanContableController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $modelopc = Modeloplancontable::find($id);
+        $modelopc->delete();
+        return json_encode($modelopc);
+
     }
 }
