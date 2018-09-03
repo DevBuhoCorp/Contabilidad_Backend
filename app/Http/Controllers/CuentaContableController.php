@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class PlanContableController extends Controller
+
+class CuentaContableController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +15,8 @@ class PlanContableController extends Controller
      */
     public function index(Request $id)
     {
-         //$planc = DB::select('SELECT fn_PlanContable(0) data;');
-         $planc = DB::select('SELECT fn_Sel_PlanContable(?,?) data;',[0,$id->input('id')]);
-         return ($planc);
+        $cuenta = DB::select('CALL Sel_CuentaContable (?,?);',[$id->input('opt'),$id->input('id')]);        
+        return json_encode($cuenta);
     }
 
     /**
