@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PlanContableController extends Controller
 {
@@ -13,7 +14,8 @@ class PlanContableController extends Controller
      */
     public function index()
     {
-        //
+         $planc = DB::select('SELECT fn_PlanContable(0) data;');
+         return ($planc);
     }
 
     /**
