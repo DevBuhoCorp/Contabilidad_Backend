@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
-class TipoCuentaBancariaController extends Controller
+class PlanContableController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +13,7 @@ class TipoCuentaBancariaController extends Controller
      */
     public function index()
     {
-       
+        //
     }
 
     /**
