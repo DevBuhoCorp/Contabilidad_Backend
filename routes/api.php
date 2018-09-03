@@ -22,3 +22,7 @@ Route::apiresource('modeloplancontable','ModeloPlanContableController');
 Route::apiresource('prueba','TipoCuentaBancariaController');    
 Route::apiresource('plancontable','PlanContableController');
 
+// kbsg
+Route::apiresource('plancontable','EmpresaController');
+Route::apiresource('plancontable','AplicacionController');
+
