@@ -21,4 +21,5 @@ Route::apiresource('naturaleza','NaturalezaController');
 Route::apiresource('modeloplancontable','ModeloPlanContableController');    
 Route::apiresource('plancontable','PlanContableController');
 Route::apiresource('cuentacontable','CuentaContableController');
+Route::get('numerocuenta','PlanContableController@numerocuenta');
 

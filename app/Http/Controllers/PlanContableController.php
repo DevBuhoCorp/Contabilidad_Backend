@@ -18,7 +18,6 @@ class PlanContableController extends Controller
          $planc = DB::select('SELECT fn_Sel_PlanContable(?,?) data;',[0,$id->input('id')]);
          return ($planc);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -83,5 +82,10 @@ class PlanContableController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function numerocuenta(Request $request)
+    {
+        $planc = DB::select('SELECT _getNumCuenta(?,?) data;' ,[$request->input('opt'),$request->input('id')]);
+        return ($planc);
     }
 }
