@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 24 Aug 2018 14:37:45 +0000.
+ * Date: Tue, 04 Sep 2018 20:28:43 +0000.
  */
 
 namespace App\Models;
@@ -19,8 +19,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property string $Estado
  * 
  * @property \App\Models\Naturaleza $naturaleza
- * @property \Illuminate\Database\Eloquent\Collection $cuentabancaria
- * @property \Illuminate\Database\Eloquent\Collection $libromayors
+ * @property \Illuminate\Database\Eloquent\Collection $cuentacontables
  *
  * @package App\Models
  */
@@ -46,13 +45,8 @@ class Diariocontable extends Eloquent
 		return $this->belongsTo(\App\Models\Naturaleza::class, 'IDNaturaleza');
 	}
 
-	public function cuentabancaria()
+	public function cuentacontables()
 	{
-		return $this->hasMany(\App\Models\Cuentabancarium::class, 'IDDiario');
-	}
-
-	public function libromayors()
-	{
-		return $this->hasMany(\App\Models\Libromayor::class, 'IDDiario');
+		return $this->hasMany(\App\Models\Cuentacontable::class, 'IDDiario');
 	}
 }

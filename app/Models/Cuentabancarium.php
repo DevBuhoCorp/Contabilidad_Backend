@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 24 Aug 2018 14:37:45 +0000.
+ * Date: Tue, 04 Sep 2018 20:28:43 +0000.
  */
 
 namespace App\Models;
@@ -28,10 +28,8 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property string $DireccionTitular
  * @property string $CuentaBancariacol
  * @property int $IDCuenta
- * @property int $IDDiario
  * 
  * @property \App\Models\Cuentacontable $cuentacontable
- * @property \App\Models\Diariocontable $diariocontable
  * @property \App\Models\Tipocuentabancarium $tipocuentabancarium
  *
  * @package App\Models
@@ -45,8 +43,7 @@ class Cuentabancarium extends Eloquent
 		'TipoCuenta' => 'int',
 		'SaldoInicial' => 'float',
 		'SaldoMinimo' => 'float',
-		'IDCuenta' => 'int',
-		'IDDiario' => 'int'
+		'IDCuenta' => 'int'
 	];
 
 	protected $dates = [
@@ -68,18 +65,12 @@ class Cuentabancarium extends Eloquent
 		'NombreTitular',
 		'DireccionTitular',
 		'CuentaBancariacol',
-		'IDCuenta',
-		'IDDiario'
+		'IDCuenta'
 	];
 
 	public function cuentacontable()
 	{
 		return $this->belongsTo(\App\Models\Cuentacontable::class, 'IDCuenta');
-	}
-
-	public function diariocontable()
-	{
-		return $this->belongsTo(\App\Models\Diariocontable::class, 'IDDiario');
 	}
 
 	public function tipocuentabancarium()
