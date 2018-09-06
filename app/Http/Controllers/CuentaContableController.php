@@ -17,7 +17,7 @@ class CuentaContableController extends Controller
     public function index(Request $id)
     {
         $cuenta = DB::select('CALL Sel_CuentaContable (?,?);',[$id->input('opt'),$id->input('id')]);
-        return json_encode($cuenta);
+        return $cuenta;
     }
 
     /**
