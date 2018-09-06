@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cuentacontable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,7 +16,7 @@ class CuentaContableController extends Controller
      */
     public function index(Request $id)
     {
-        $cuenta = DB::select('CALL Sel_CuentaContable (?,?);',[$id->input('opt'),$id->input('id')]);        
+        $cuenta = DB::select('CALL Sel_CuentaContable (?,?);',[$id->input('opt'),$id->input('id')]);
         return json_encode($cuenta);
     }
 
@@ -48,7 +49,19 @@ class CuentaContableController extends Controller
      */
     public function show($id)
     {
-        //
+        $cuenta = Cuentacontable::find($id);
+        return $cuenta;
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getNumCuenta($plancontable, $id)
+    {
+        $secuencia = DB::select('call getNumCuenta(?,?)', [ $id, $plancontable]);
+        return $secuencia;
     }
 
     /**
