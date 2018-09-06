@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 24 Aug 2018 14:37:45 +0000.
+ * Date: Tue, 04 Sep 2018 20:28:43 +0000.
  */
 
 namespace App\Models;
@@ -15,6 +15,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property int $ID
  * @property int $IDModelo
  * @property int $IDCuenta
+ * @property int $ncuenta
  * 
  * @property \App\Models\Cuentacontable $cuentacontable
  * @property \App\Models\Modeloplancontable $modeloplancontable
@@ -25,18 +26,18 @@ class Plancontable extends Eloquent
 {
 	protected $table = 'plancontable';
 	protected $primaryKey = 'ID';
-	public $incrementing = false;
 	public $timestamps = false;
 
 	protected $casts = [
-		'ID' => 'int',
 		'IDModelo' => 'int',
-		'IDCuenta' => 'int'
+		'IDCuenta' => 'int',
+		'ncuenta' => 'int'
 	];
 
 	protected $fillable = [
 		'IDModelo',
-		'IDCuenta'
+		'IDCuenta',
+		'ncuenta'
 	];
 
 	public function cuentacontable()

@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 24 Aug 2018 14:37:45 +0000.
+ * Date: Tue, 04 Sep 2018 20:28:43 +0000.
  */
 
 namespace App\Models;
@@ -19,14 +19,16 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property int $IDPadre
  * @property string $Estado
  * @property float $Saldo
+ * @property int $IDDiario
  * 
  * @property \App\Models\Cuentacontable $cuentacontable
+ * @property \App\Models\Diariocontable $diariocontable
  * @property \App\Models\Grupocuentum $grupocuentum
  * @property \Illuminate\Database\Eloquent\Collection $cuentabancaria
  * @property \Illuminate\Database\Eloquent\Collection $cuentacontables
  * @property \Illuminate\Database\Eloquent\Collection $cuentadefectos
  * @property \Illuminate\Database\Eloquent\Collection $cuentaimpuestos
- * @property \Illuminate\Database\Eloquent\Collection $libromayors
+ * @property \Illuminate\Database\Eloquent\Collection $detalletransaccions
  * @property \Illuminate\Database\Eloquent\Collection $listagrupopersonalizados
  * @property \Illuminate\Database\Eloquent\Collection $plancontables
  *
@@ -41,7 +43,8 @@ class Cuentacontable extends Eloquent
 	protected $casts = [
 		'IDGrupoCuenta' => 'int',
 		'IDPadre' => 'int',
-		'Saldo' => 'float'
+		'Saldo' => 'float',
+		'IDDiario' => 'int'
 	];
 
 	protected $fillable = [
@@ -50,12 +53,18 @@ class Cuentacontable extends Eloquent
 		'IDGrupoCuenta',
 		'IDPadre',
 		'Estado',
-		'Saldo'
+		'Saldo',
+		'IDDiario'
 	];
 
 	public function cuentacontable()
 	{
 		return $this->belongsTo(\App\Models\Cuentacontable::class, 'IDPadre');
+	}
+
+	public function diariocontable()
+	{
+		return $this->belongsTo(\App\Models\Diariocontable::class, 'IDDiario');
 	}
 
 	public function grupocuentum()
@@ -83,9 +92,9 @@ class Cuentacontable extends Eloquent
 		return $this->hasMany(\App\Models\Cuentaimpuesto::class, 'IDCuenta');
 	}
 
-	public function libromayors()
+	public function detalletransaccions()
 	{
-		return $this->hasMany(\App\Models\Libromayor::class, 'IDCuenta');
+		return $this->hasMany(\App\Models\Detalletransaccion::class, 'IDCuenta');
 	}
 
 	public function listagrupopersonalizados()

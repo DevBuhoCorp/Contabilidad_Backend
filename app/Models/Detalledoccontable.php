@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 24 Aug 2018 14:37:45 +0000.
+ * Date: Tue, 04 Sep 2018 20:28:43 +0000.
  */
 
 namespace App\Models;
@@ -10,37 +10,37 @@ namespace App\Models;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Detallefactura
+ * Class Detalledoccontable
  * 
  * @property int $ID
- * @property int $IDFactura
+ * @property int $IDDocContable
  * @property string $CodigoProducto
  * @property string $Descripcion
  * @property float $ValorUnitario
  * @property float $Cantidad
  * @property float $Total
  * 
- * @property \App\Models\Factura $factura
+ * @property \App\Models\Documentocontable $documentocontable
  *
  * @package App\Models
  */
-class Detallefactura extends Eloquent
+class Detalledoccontable extends Eloquent
 {
-	protected $table = 'detallefactura';
+	protected $table = 'detalledoccontable';
 	protected $primaryKey = 'ID';
 	public $incrementing = false;
 	public $timestamps = false;
 
 	protected $casts = [
 		'ID' => 'int',
-		'IDFactura' => 'int',
+		'IDDocContable' => 'int',
 		'ValorUnitario' => 'float',
 		'Cantidad' => 'float',
 		'Total' => 'float'
 	];
 
 	protected $fillable = [
-		'IDFactura',
+		'IDDocContable',
 		'CodigoProducto',
 		'Descripcion',
 		'ValorUnitario',
@@ -48,8 +48,8 @@ class Detallefactura extends Eloquent
 		'Total'
 	];
 
-	public function factura()
+	public function documentocontable()
 	{
-		return $this->belongsTo(\App\Models\Factura::class, 'IDFactura');
+		return $this->belongsTo(\App\Models\Documentocontable::class, 'IDDocContable');
 	}
 }

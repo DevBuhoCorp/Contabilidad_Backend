@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cuentacontable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Modeloplancontable;
@@ -27,7 +28,7 @@ class ModeloPlanContableController extends Controller
      */
     public function create()
     {
-        //
+        return null;
     }
 
     /**

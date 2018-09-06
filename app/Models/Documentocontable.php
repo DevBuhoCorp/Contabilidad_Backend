@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 24 Aug 2018 14:37:45 +0000.
+ * Date: Tue, 04 Sep 2018 20:28:43 +0000.
  */
 
 namespace App\Models;
@@ -10,11 +10,11 @@ namespace App\Models;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Factura
+ * Class Documentocontable
  * 
  * @property int $ID
  * @property \Carbon\Carbon $Fecha
- * @property string $NFactura
+ * @property string $SerieDocumento
  * @property string $FormaPago
  * @property string $PuntoVenta
  * @property string $Sucursal
@@ -23,15 +23,16 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property float $Total
  * @property string $Imagen
  * @property string $Tipo
+ * @property int $IDTransaccion
  * 
- * @property \Illuminate\Database\Eloquent\Collection $detallefacturas
- * @property \Illuminate\Database\Eloquent\Collection $libromayors
+ * @property \App\Models\Transaccion $transaccion
+ * @property \Illuminate\Database\Eloquent\Collection $detalledoccontables
  *
  * @package App\Models
  */
-class Factura extends Eloquent
+class Documentocontable extends Eloquent
 {
-	protected $table = 'factura';
+	protected $table = 'documentocontable';
 	protected $primaryKey = 'ID';
 	public $incrementing = false;
 	public $timestamps = false;
@@ -40,7 +41,8 @@ class Factura extends Eloquent
 		'ID' => 'int',
 		'Descuento' => 'float',
 		'IVA' => 'float',
-		'Total' => 'float'
+		'Total' => 'float',
+		'IDTransaccion' => 'int'
 	];
 
 	protected $dates = [
@@ -49,7 +51,7 @@ class Factura extends Eloquent
 
 	protected $fillable = [
 		'Fecha',
-		'NFactura',
+		'SerieDocumento',
 		'FormaPago',
 		'PuntoVenta',
 		'Sucursal',
@@ -57,16 +59,17 @@ class Factura extends Eloquent
 		'IVA',
 		'Total',
 		'Imagen',
-		'Tipo'
+		'Tipo',
+		'IDTransaccion'
 	];
 
-	public function detallefacturas()
+	public function transaccion()
 	{
-		return $this->hasMany(\App\Models\Detallefactura::class, 'IDFactura');
+		return $this->belongsTo(\App\Models\Transaccion::class, 'IDTransaccion');
 	}
 
-	public function libromayors()
+	public function detalledoccontables()
 	{
-		return $this->hasMany(\App\Models\Libromayor::class, 'IDFactura');
+		return $this->hasMany(\App\Models\Detalledoccontable::class, 'IDDocContable');
 	}
 }

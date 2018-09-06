@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Fri, 24 Aug 2018 14:37:45 +0000.
+ * Date: Tue, 04 Sep 2018 20:28:43 +0000.
  */
 
 namespace App\Models;
@@ -10,26 +10,23 @@ namespace App\Models;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Libromayor
+ * Class Detalletransaccion
  * 
  * @property int $ID
- * @property \Carbon\Carbon $Fecha
  * @property int $IDCuenta
  * @property string $Etiqueta
  * @property float $Debe
  * @property float $Haber
- * @property int $IDDiario
- * @property int $IDFactura
+ * @property int $IDTransaccion
  * 
  * @property \App\Models\Cuentacontable $cuentacontable
- * @property \App\Models\Diariocontable $diariocontable
- * @property \App\Models\Factura $factura
+ * @property \App\Models\Transaccion $transaccion
  *
  * @package App\Models
  */
-class Libromayor extends Eloquent
+class Detalletransaccion extends Eloquent
 {
-	protected $table = 'libromayor';
+	protected $table = 'detalletransaccion';
 	protected $primaryKey = 'ID';
 	public $timestamps = false;
 
@@ -37,22 +34,15 @@ class Libromayor extends Eloquent
 		'IDCuenta' => 'int',
 		'Debe' => 'float',
 		'Haber' => 'float',
-		'IDDiario' => 'int',
-		'IDFactura' => 'int'
-	];
-
-	protected $dates = [
-		'Fecha'
+		'IDTransaccion' => 'int'
 	];
 
 	protected $fillable = [
-		'Fecha',
 		'IDCuenta',
 		'Etiqueta',
 		'Debe',
 		'Haber',
-		'IDDiario',
-		'IDFactura'
+		'IDTransaccion'
 	];
 
 	public function cuentacontable()
@@ -60,13 +50,8 @@ class Libromayor extends Eloquent
 		return $this->belongsTo(\App\Models\Cuentacontable::class, 'IDCuenta');
 	}
 
-	public function diariocontable()
+	public function transaccion()
 	{
-		return $this->belongsTo(\App\Models\Diariocontable::class, 'IDDiario');
-	}
-
-	public function factura()
-	{
-		return $this->belongsTo(\App\Models\Factura::class, 'IDFactura');
+		return $this->belongsTo(\App\Models\Transaccion::class, 'IDTransaccion');
 	}
 }

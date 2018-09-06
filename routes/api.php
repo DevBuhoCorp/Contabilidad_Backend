@@ -23,3 +23,10 @@ Route::apiresource('plancontable','PlanContableController');
 Route::apiresource('cuentacontable','CuentaContableController');
 Route::get('numerocuenta','PlanContableController@numerocuenta');
 
+Route::get('cuentacontable/{id}','CuentaContableController@show');
+Route::get('plancontable/{pc}/cuentacontable/{id}','CuentaContableController@getNumCuenta');
+
+// kbsg
+Route::apiresource('empresa','EmpresaController');
+Route::apiresource('aplicacion','AplicacionController');
+
