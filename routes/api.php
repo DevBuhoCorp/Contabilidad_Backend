@@ -22,6 +22,8 @@ Route::apiresource('modeloplancontable','ModeloPlanContableController');
 Route::apiresource('plancontable','PlanContableController');
 Route::apiresource('cuentacontable','CuentaContableController');
 Route::get('numerocuenta','PlanContableController@numerocuenta');
+Route::get('cuentapadre','CuentaContableController@MaxPadre');
+
 
 Route::get('cuentacontable/{id}','CuentaContableController@show');
 Route::get('plancontable/{pc}/cuentacontable/{id}','CuentaContableController@getNumCuenta');

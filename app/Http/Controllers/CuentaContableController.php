@@ -17,7 +17,7 @@ class CuentaContableController extends Controller
      */
     public function index(Request $id)
     {
-        $cuenta = DB::select('CALL Sel_CuentaContable (?,?);',[$id->input('opt'),$id->input('id')]);
+        $cuenta = DB::select('CALL Sel_CuentaContable (?,?);', [$id->input('opt'), $id->input('id')]);
         return $cuenta;
     }
 
@@ -50,11 +50,18 @@ class CuentaContableController extends Controller
         $planC->save();
 
         //
-        $planC = Plancontable::where("IDModelo" ,$request->input("IDPlanContable"))->where("IDCuenta", $cuenta->IDPadre)->get()[0];
-        $planC->ncuenta = $planC->ncuenta + 1;
-        $planC->save();
-        
-        return Response( $cuenta,200);
+        if ($cuenta->IDPadre) {
+            $planC = Plancontable::where("IDModelo", $request->input("IDPlanContable"))->where("IDCuenta", $cuenta->IDPadre)->get()[0];
+            $planC->ncuenta = $planC->ncuenta + 1;
+            $planC->save();
+        }
+        else{
+            $planC = Plancontable::where("IDModelo", $request->input("IDPlanContable"))->where("IDCuenta", $cuenta->ID)->get()[0];
+            $planC->ncuenta = $planC->ncuenta + 1;
+            $planC->save();
+        }
+
+        return Response($cuenta, 200);
     }
 
     /**
@@ -76,8 +83,14 @@ class CuentaContableController extends Controller
      */
     public function getNumCuenta($plancontable, $id)
     {
-        $secuencia = DB::select('call getNumCuenta(?,?)', [ $id, $plancontable]);
+        $secuencia = DB::select('call getNumCuenta(?,?)', [$id, $plancontable]);
         return $secuencia;
+    }
+
+    public function MaxPadre()
+    {
+        $numerocuenta = (Cuentacontable::whereNull('IDPadre')->max('NumeroCuenta')) + 1;
+        return $numerocuenta;
     }
 
     /**
