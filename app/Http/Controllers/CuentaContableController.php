@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cuentacontable;
+use App\Models\Plancontable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -38,7 +39,22 @@ class CuentaContableController extends Controller
      */
     public function store(Request $request)
     {
+        $cuenta = Cuentacontable::create($request->all());
+        $cuenta->save();
+
+        // Plan Contable
+        $planC = new Plancontable;
+        $planC->IDCuenta = $cuenta->ID;
+        $planC->IDModelo = $request->input("IDPlanContable");
+        $planC->ncuenta = 0;
+        $planC->save();
+
         //
+        $planC = Plancontable::where("IDModelo" ,$request->input("IDPlanContable"))->where("IDCuenta", $cuenta->IDPadre)->get()[0];
+        $planC->ncuenta = $planC->ncuenta + 1;
+        $planC->save();
+        
+        return Response( $cuenta,200);
     }
 
     /**
@@ -89,7 +105,7 @@ class CuentaContableController extends Controller
         $cuenta->Estado = $request->input('Estado');
         $cuenta->IDDiario = $request->input('IDDiario');
         $cuenta->save();
-        return $id;
+        return $cuenta;
     }
 
     /**
