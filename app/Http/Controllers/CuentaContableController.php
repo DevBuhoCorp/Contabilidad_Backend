@@ -72,7 +72,7 @@ class CuentaContableController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -84,7 +84,12 @@ class CuentaContableController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cuenta = Cuentacontable::find($id);
+        $cuenta->Etiqueta = $request->input('Etiqueta');
+        $cuenta->Estado = $request->input('Estado');
+        $cuenta->IDDiario = $request->input('IDDiario');
+        $cuenta->save();
+        return $id;
     }
 
     /**
