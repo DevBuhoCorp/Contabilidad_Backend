@@ -17,7 +17,7 @@ class CuentaContableController extends Controller
      */
     public function index(Request $id)
     {
-        $cuenta = DB::select('CALL Sel_CuentaContable (?,?);',[$id->input('opt'),$id->input('id')]);
+        $cuenta = DB::select('CALL Sel_CuentaContable (?,?);', [$id->input('opt'), $id->input('id')]);
         return $cuenta;
     }
 
@@ -34,7 +34,7 @@ class CuentaContableController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -50,17 +50,23 @@ class CuentaContableController extends Controller
         $planC->save();
 
         //
-        $planC = Plancontable::where("IDModelo" ,$request->input("IDPlanContable"))->where("IDCuenta", $cuenta->IDPadre)->get()[0];
-        $planC->ncuenta = $planC->ncuenta + 1;
-        $planC->save();
+        if ($cuenta->IDPadre) {
+            $planC = Plancontable::where("IDModelo", $request->input("IDPlanContable"))->where("IDCuenta", $cuenta->IDPadre)->get()[0];
+            $planC->ncuenta = $planC->ncuenta + 1;
+            $planC->save();
+        } else {
+            $planC = Plancontable::where("IDModelo", $request->input("IDPlanContable"))->where("IDCuenta", $cuenta->ID)->get()[0];
+            $planC->ncuenta = $planC->ncuenta + 1;
+            $planC->save();
+        }
 
-        return Response( $cuenta,200);
+        return Response($cuenta, 200);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -68,22 +74,41 @@ class CuentaContableController extends Controller
         $cuenta = Cuentacontable::find($id);
         return $cuenta;
     }
+
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function getNumCuenta($plancontable, $id)
     {
-        $secuencia = DB::select('call getNumCuenta(?,?)', [ $id, $plancontable]);
+        $secuencia = DB::select('call getNumCuenta(?,?)', [$id, $plancontable]);
         return $secuencia;
     }
+
+    public function MaxPadre()
+    {
+        $numerocuenta = (Cuentacontable::whereNull('IDPadre')->max('NumeroCuenta')) + 1;
+        return $numerocuenta;
+    }
+
+    public function drag(Request $request)
+    {
+        $cuentas = Cuentacontable::select('ID AS data','Etiqueta AS label')->whereNotExists(function ($query) use ($request) {
+            $query->select(DB::raw(1))
+                ->from('plancontable')
+                ->whereRaw('IDModelo = ' . $request->input("id") )->whereRaw('cuentacontable.ID = IDCuenta');
+        })->get();
+
+        return Response()->json($cuentas, 200);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -94,8 +119,8 @@ class CuentaContableController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
@@ -111,7 +136,7 @@ class CuentaContableController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
