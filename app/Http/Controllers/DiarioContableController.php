@@ -15,7 +15,7 @@ class DiarioContableController extends Controller
      */
     public function index(Request $id)
     {
-        $diarios = DB::select('CALL Sel_DiarioContable (?,?);',[$id->input('opt'),$id->input('id')]);        
+        $diarios = DB::select('CALL Sel_DiarioContable (?,?);',[$id->input('opt'),$id->input('id')]);
         return json_encode($diarios);
     }
 
@@ -30,11 +30,11 @@ class DiarioContableController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+ * Store a newly created resource in storage.
+ *
+ * @param  \Illuminate\Http\Request  $request
+ * @return \Illuminate\Http\Response
+ */
     public function store(Request $request)
     {
         $array [] = json_encode($request->all());

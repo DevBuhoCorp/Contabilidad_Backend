@@ -28,5 +28,7 @@ Route::get('plancontable/{pc}/cuentacontable/{id}','CuentaContableController@get
 
 // kbsg
 Route::apiresource('empresa','EmpresaController');
+Route::post('empresa/list','EmpresaController@listParams');
+
 Route::apiresource('aplicacion','AplicacionController');
 
