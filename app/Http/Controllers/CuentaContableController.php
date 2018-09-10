@@ -56,7 +56,7 @@ class CuentaContableController extends Controller
             $planC->save();
         } else {
             $planC = Plancontable::where("IDModelo", $request->input("IDPlanContable"))->where("IDCuenta", $cuenta->ID)->get()[0];
-            $planC->ncuenta = $planC->ncuenta + 1;
+            $planC->ncuenta = $planC->ncuenta;
             $planC->save();
         }
 
