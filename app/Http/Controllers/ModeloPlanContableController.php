@@ -83,7 +83,7 @@ class ModeloPlanContableController extends Controller
         $modelopc->etiqueta = $request->input('Etiqueta');
         $modelopc->estado = $request->input('Estado');
         $modelopc->save();
-        return json_encode($modelopc);
+        return Response( $modelopc , 200);
     }
 
     /**

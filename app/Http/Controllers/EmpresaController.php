@@ -53,6 +53,7 @@ class EmpresaController extends Controller
     public function store(Request $request)
     {
         $empresa = Empresa::create($request->all());
+        $empresa->Estado = $empresa->Estado ? 'ACT' : 'INA';
         $empresa->save();
         return Response( $empresa,200);
     }
@@ -89,7 +90,12 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return Response( [],200);
+        $empresa = Empresa::find($id);
+        $empresa->Estado = $request->input('Estado')? 'ACT' : 'INA';
+        $empresa->Observacion = $request->input('Observacion');
+        $empresa->Descripcion = $request->input('Descripcion');
+        $empresa->save();
+        return Response( $empresa ,200);
     }
 
     /**
@@ -100,6 +106,9 @@ class EmpresaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $empresa = Empresa::find($id);
+        $empresa->Estado = 'INA';
+        $empresa->save();
+        return Response( $empresa ,200);
     }
 }
