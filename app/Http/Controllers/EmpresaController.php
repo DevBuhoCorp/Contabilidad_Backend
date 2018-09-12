@@ -15,6 +15,8 @@ class EmpresaController extends Controller
      */
     public function index()
     {
+        return Response([], 200);
+
 //        $op = json_encode(array( "op" => "ALL"));
 //        $diarios = DB::select('CALL Sel_Empresa (?);', [ $op ]);
 //        return Response($diarios, 200) ;

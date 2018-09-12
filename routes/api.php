@@ -27,6 +27,7 @@ Route::get('cuentapadre','CuentaContableController@MaxPadre');
 
 
 Route::get('cuentacontable/{id}','CuentaContableController@show');
+Route::get('planc/cuentacontable','PlanContableController@apiPlanCuenta');
 Route::get('plancontable/{pc}/cuentacontable/{id}','CuentaContableController@getNumCuenta');
 
 // kbsg
