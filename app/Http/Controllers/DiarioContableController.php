@@ -23,9 +23,9 @@ class DiarioContableController extends Controller
         -> where('d.IDNaturaleza', '=', 'n.ID')
         ->paginate(3);*/
 
-        $diarios = DB::table('diariocontable as d')
-            ->join('naturaleza as n','diariocontable.IDNaturaleza','=', 'naturaleza.ID')
-            ->select(DB::raw('d.ID,d.Codigo,d.Etiqueta,n.Etiqueta as Naturaleza,d.Estado,n.ID as IDNaturaleza'))
+        $diarios = DB::table('diariocontable')
+            ->join('naturaleza','diariocontable.IDNaturaleza','=', 'naturaleza.ID')
+            ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
             ->paginate(3);
         return Response($diarios, 200);
 
@@ -33,7 +33,7 @@ class DiarioContableController extends Controller
 
 
 
-        return $diarios;
+        //return $diarios;
 
         /*$diarios = DB::table('diariocontable')->paginate(3);
         return json_encode($diarios);*/
