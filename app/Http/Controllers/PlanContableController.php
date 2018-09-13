@@ -104,7 +104,12 @@ class PlanContableController extends Controller
     {
         $modelo = new Modeloplancontable(["ID" => 6]);
 //        $modelo->ID = 6;
-        $cuentasBruto = $modelo->cuentacontables()->get();
+//        $cuentasBruto = $modelo->cuentacontables()->get();
+        $cuentasBruto = Cuentacontable::
+                            join('plancontable','IDCuenta','=', 'cuentacontable.ID')
+                            ->where('plancontable.IDModelo',6)
+                            ->get(['cuentacontable.ID','Etiqueta','NumeroCuenta','cuentacontable.Estado','IDPadre']);
+
         $cuentasPadre = $cuentasBruto->where('IDPadre', null);
         $response = $this->to_tree($cuentasPadre, $cuentasBruto);
 
