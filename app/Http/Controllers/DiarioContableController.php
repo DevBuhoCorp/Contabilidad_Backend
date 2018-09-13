@@ -15,8 +15,32 @@ class DiarioContableController extends Controller
      */
     public function index(Request $id)
     {
-        $diarios = DB::select('CALL Sel_DiarioContable (?,?);',[$id->input('opt'),$id->input('id')]);
-        return json_encode($diarios);
+        /*$diarios = DB::select('CALL Sel_DiarioContable (?,?);',[$id->input('opt'),$id->input('id')]);
+        return $diarios;*/
+        
+       /* $diarios = DB::table(DB::raw('diariocontable d, naturaleza n')) 
+        -> select(DB::raw('d.ID,d.Codigo,d.Etiqueta,n.Etiqueta as Naturaleza,d.Estado,n.ID as IDNaturaleza'))
+        -> where('d.IDNaturaleza', '=', 'n.ID')
+        ->paginate(3);*/
+
+        $diarios = DB::table('diariocontable as d')
+            ->join('naturaleza as n','diariocontable.IDNaturaleza','=', 'naturaleza.ID')
+            ->select(DB::raw('d.ID,d.Codigo,d.Etiqueta,n.Etiqueta as Naturaleza,d.Estado,n.ID as IDNaturaleza'))
+            ->paginate(3);
+        return Response($diarios, 200);
+
+
+
+
+
+        return $diarios;
+
+        /*$diarios = DB::table('diariocontable')->paginate(3);
+        return json_encode($diarios);*/
+      
+
+        /*$diarios = DiarioContable::paginate(3);
+        return json_encode($diarios);*/
     }
 
     /**
