@@ -28,13 +28,30 @@ class Modeloplancontable extends Eloquent
 	public $timestamps = false;
 
 	protected $fillable = [
+		'ID',
 		'Modelo',
 		'Etiqueta',
 		'Estado'
 	];
 
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+    }
+
 	public function plancontables()
 	{
 		return $this->hasMany(\App\Models\Plancontable::class, 'IDModelo');
+	}
+	public function cuentacontables()
+	{
+		return $this->hasManyThrough(
+		    \App\Models\Cuentacontable::class,
+            \App\Models\Plancontable::class,
+            'IDModelo',
+            'ID',
+            'ID',
+            'IDCuenta'
+        );
 	}
 }
