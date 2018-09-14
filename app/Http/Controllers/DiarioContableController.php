@@ -15,32 +15,20 @@ class DiarioContableController extends Controller
      */
     public function index(Request $id)
     {
-        /*$diarios = DB::select('CALL Sel_DiarioContable (?,?);',[$id->input('opt'),$id->input('id')]);
-        return $diarios;*/
-        
-       /* $diarios = DB::table(DB::raw('diariocontable d, naturaleza n')) 
-        -> select(DB::raw('d.ID,d.Codigo,d.Etiqueta,n.Etiqueta as Naturaleza,d.Estado,n.ID as IDNaturaleza'))
-        -> where('d.IDNaturaleza', '=', 'n.ID')
-        ->paginate(3);*/
-
-        $diarios = DB::table('diariocontable')
-            ->join('naturaleza','diariocontable.IDNaturaleza','=', 'naturaleza.ID')
-            ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
-            ->paginate(3);
-        return Response($diarios, 200);
-
-
-
-
-
-        //return $diarios;
-
-        /*$diarios = DB::table('diariocontable')->paginate(3);
-        return json_encode($diarios);*/
-      
-
-        /*$diarios = DiarioContable::paginate(3);
-        return json_encode($diarios);*/
+        if ($id->input('opt') == "All") {
+            $diarios = DB::table('diariocontable')
+                ->join('naturaleza', 'diariocontable.IDNaturaleza', '=', 'naturaleza.ID')
+                ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
+                ->paginate(env("PAGINACION"));
+            return Response($diarios, 200);
+        } else {
+            $diarios = DB::table('diariocontable')
+                ->join('naturaleza', 'diariocontable.IDNaturaleza', '=', 'naturaleza.ID')
+                ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
+                ->where('diariocontable.ID', '=', $id->input('id'))
+                ->get();
+            return Response($diarios, 200);
+        }
     }
 
     /**
@@ -54,15 +42,15 @@ class DiarioContableController extends Controller
     }
 
     /**
- * Store a newly created resource in storage.
- *
- * @param  \Illuminate\Http\Request  $request
- * @return \Illuminate\Http\Response
- */
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        $array [] = json_encode($request->all());
-        $diarios = DB::insert('CALL Ins_DiarioContable (?)',$array);
+        $array[] = json_encode($request->all());
+        $diarios = DB::insert('CALL Ins_DiarioContable (?)', $array);
         return json_encode($diarios);
     }
 
@@ -97,8 +85,8 @@ class DiarioContableController extends Controller
      */
     public function update(Request $request)
     {
-        $array [] = json_encode($request->all());
-        $diarios = DB::update('CALL Upd_DiarioContable (?)',$array);
+        $array[] = json_encode($request->all());
+        $diarios = DB::update('CALL Upd_DiarioContable (?)', $array);
         return json_encode($diarios);
     }
 
@@ -110,7 +98,7 @@ class DiarioContableController extends Controller
      */
     public function destroy($id)
     {
-        $diarios = DB::delete('CALL Del_DiarioContable (?)',[$id]);
+        $diarios = DB::delete('CALL Del_DiarioContable (?)', [$id]);
         return json_encode($diarios);
     }
 }

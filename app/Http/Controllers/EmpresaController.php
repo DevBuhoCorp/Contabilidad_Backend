@@ -19,12 +19,8 @@ class EmpresaController extends Controller
         $response = DB::table(diariocontable)
             ->join('naturaleza','diariocontable.IDNaturaleza','=', 'naturaleza.ID')
             ->select(DB::raw('diariocontable.Etiqueta, IDNaturaleza, naturaleza.Etiqueta as naturaleza'))
-            ->paginate(3);
+            ->paginate(env("PAGINACION"));
         return Response($response, 200);
-
-//        $op = json_encode(array( "op" => "ALL"));
-//        $diarios = DB::select('CALL Sel_Empresa (?);', [ $op ]);
-//        return Response($diarios, 200) ;
     }
 
     /**
