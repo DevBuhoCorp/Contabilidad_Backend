@@ -21,7 +21,8 @@ class DiarioContableController extends Controller
                 ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
                 ->paginate(env("PAGINACION"));
             return Response($diarios, 200);
-        } else {
+        } 
+        else {
             $diarios = DB::table('diariocontable')
                 ->join('naturaleza', 'diariocontable.IDNaturaleza', '=', 'naturaleza.ID')
                 ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
