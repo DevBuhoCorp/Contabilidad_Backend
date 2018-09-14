@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Tue, 04 Sep 2018 20:28:43 +0000.
+ * Date: Thu, 13 Sep 2018 22:19:14 +0000.
  */
 
 namespace App\Models;
@@ -28,30 +28,13 @@ class Modeloplancontable extends Eloquent
 	public $timestamps = false;
 
 	protected $fillable = [
-		'ID',
 		'Modelo',
 		'Etiqueta',
 		'Estado'
 	];
 
-    public function __construct(array $attributes = array())
-    {
-        parent::__construct($attributes);
-    }
-
 	public function plancontables()
 	{
 		return $this->hasMany(\App\Models\Plancontable::class, 'IDModelo');
-	}
-	public function cuentacontables()
-	{
-		return $this->hasManyThrough(
-		    \App\Models\Cuentacontable::class,
-            \App\Models\Plancontable::class,
-            'IDModelo',
-            'ID',
-            'ID',
-            'IDCuenta'
-        );
 	}
 }

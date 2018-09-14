@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Tue, 04 Sep 2018 20:28:43 +0000.
+ * Date: Thu, 13 Sep 2018 22:19:14 +0000.
  */
 
 namespace App\Models;
@@ -18,6 +18,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property string $Estado
  * 
  * @property \Illuminate\Database\Eloquent\Collection $empresas
+ * @property \Illuminate\Database\Eloquent\Collection $estacions
  *
  * @package App\Models
  */
@@ -36,6 +37,11 @@ class Aplicacion extends Eloquent
 	public function empresas()
 	{
 		return $this->belongsToMany(\App\Models\Empresa::class, 'empresaaplicacion', 'IDAplicacion', 'IDEmpresa')
-					->withPivot('ID', 'token');
+					->withPivot('ID');
+	}
+
+	public function estacions()
+	{
+		return $this->hasMany(\App\Models\Estacion::class, 'IDAplicacion');
 	}
 }

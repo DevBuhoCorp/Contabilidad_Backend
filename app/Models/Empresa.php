@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Tue, 04 Sep 2018 20:28:43 +0000.
+ * Date: Thu, 13 Sep 2018 22:19:14 +0000.
  */
 
 namespace App\Models;
@@ -36,6 +36,6 @@ class Empresa extends Eloquent
 	public function aplicacions()
 	{
 		return $this->belongsToMany(\App\Models\Aplicacion::class, 'empresaaplicacion', 'IDEmpresa', 'IDAplicacion')
-					->withPivot('ID', 'token');
+					->withPivot('ID');
 	}
 }

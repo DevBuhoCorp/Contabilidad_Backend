@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Tue, 04 Sep 2018 20:28:43 +0000.
+ * Date: Thu, 13 Sep 2018 22:19:14 +0000.
  */
 
 namespace App\Models;
@@ -14,7 +14,9 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * 
  * @property int $ID
  * @property \Carbon\Carbon $Fecha
+ * @property int $IDEstacion
  * 
+ * @property \App\Models\Estacion $estacion
  * @property \Illuminate\Database\Eloquent\Collection $detalletransaccions
  * @property \Illuminate\Database\Eloquent\Collection $documentocontables
  *
@@ -26,13 +28,23 @@ class Transaccion extends Eloquent
 	protected $primaryKey = 'ID';
 	public $timestamps = false;
 
+	protected $casts = [
+		'IDEstacion' => 'int'
+	];
+
 	protected $dates = [
 		'Fecha'
 	];
 
 	protected $fillable = [
-		'Fecha'
+		'Fecha',
+		'IDEstacion'
 	];
+
+	public function estacion()
+	{
+		return $this->belongsTo(\App\Models\Estacion::class, 'IDEstacion');
+	}
 
 	public function detalletransaccions()
 	{

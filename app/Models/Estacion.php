@@ -10,30 +10,33 @@ namespace App\Models;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Empresaaplicacion
+ * Class Estacion
  * 
  * @property int $ID
- * @property int $IDEmpresa
+ * @property string $Nmaquina
+ * @property string $Token
+ * @property string $Estado
  * @property int $IDAplicacion
  * 
  * @property \App\Models\Aplicacion $aplicacion
- * @property \App\Models\Empresa $empresa
+ * @property \Illuminate\Database\Eloquent\Collection $transaccions
  *
  * @package App\Models
  */
-class Empresaaplicacion extends Eloquent
+class Estacion extends Eloquent
 {
-	protected $table = 'empresaaplicacion';
+	protected $table = 'estacion';
 	protected $primaryKey = 'ID';
 	public $timestamps = false;
 
 	protected $casts = [
-		'IDEmpresa' => 'int',
 		'IDAplicacion' => 'int'
 	];
 
 	protected $fillable = [
-		'IDEmpresa',
+		'Nmaquina',
+		'Token',
+		'Estado',
 		'IDAplicacion'
 	];
 
@@ -42,8 +45,8 @@ class Empresaaplicacion extends Eloquent
 		return $this->belongsTo(\App\Models\Aplicacion::class, 'IDAplicacion');
 	}
 
-	public function empresa()
+	public function transaccions()
 	{
-		return $this->belongsTo(\App\Models\Empresa::class, 'IDEmpresa');
+		return $this->hasMany(\App\Models\Transaccion::class, 'IDEstacion');
 	}
 }

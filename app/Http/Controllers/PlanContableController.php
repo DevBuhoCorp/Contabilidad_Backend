@@ -102,15 +102,17 @@ class PlanContableController extends Controller
      */
     public function apiPlanCuenta()
     {
-        $modelo = new Modeloplancontable(["ID" => 6]);
-//        $modelo->ID = 6;
-        $cuentasBruto = Cuentacontable::
-                            join('plancontable','IDCuenta','=', 'cuentacontable.ID')
-                            ->where('plancontable.IDModelo',6)
-                            ->get(['cuentacontable.ID','Etiqueta','NumeroCuenta','cuentacontable.Estado','IDPadre']);
-        $cuentasPadre = $cuentasBruto->where('IDPadre', null);
-        $response = $this->to_tree($cuentasPadre, $cuentasBruto);
-        return Response($response, 200);
+        $modelos = Modeloplancontable::where('Estado','ACT')->get();
+        foreach ($modelos as $modelo){
+            $cuentasBruto = Cuentacontable::
+                                    join('plancontable','IDCuenta','=', 'cuentacontable.ID')
+                                    ->where('plancontable.IDModelo',$modelo['ID'])
+                                    ->get(['cuentacontable.ID','Etiqueta','NumeroCuenta','cuentacontable.Estado','IDPadre']);
+            $cuentasPadre = $cuentasBruto->where('IDPadre', null);
+            $modelo["cuentas"] = $this->to_tree($cuentasPadre, $cuentasBruto);
+        }
+
+        return Response($modelos, 200);
     }
 
     public function to_tree($parents, $all)
