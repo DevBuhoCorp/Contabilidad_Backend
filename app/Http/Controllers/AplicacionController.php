@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Aplicacion;
 use App\Models\Empresaaplicacion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AplicacionController extends Controller
 {
@@ -13,9 +14,13 @@ class AplicacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $apps = Aplicacion::
+                join('empresaaplicacion as eapp', 'eapp.IDAplicacion','=','aplicacion.ID')
+                ->where('eapp.IDEmpresa', $request->input('empresa'))
+                ->Paginate(3);
+        return Response($apps,200);
     }
 
     /**
