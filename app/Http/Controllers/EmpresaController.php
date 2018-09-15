@@ -14,13 +14,10 @@ class EmpresaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $id)
     {
-        $response = DB::table(diariocontable)
-            ->join('naturaleza','diariocontable.IDNaturaleza','=', 'naturaleza.ID')
-            ->select(DB::raw('diariocontable.Etiqueta, IDNaturaleza, naturaleza.Etiqueta as naturaleza'))
-            ->paginate(env("PAGINACION"));
-        return Response($response, 200);
+        $empresa = new Empresa();
+        return Response($empresa->paginate($id->input('psize')),200);
     }
 
     /**

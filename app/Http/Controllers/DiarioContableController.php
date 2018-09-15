@@ -15,21 +15,11 @@ class DiarioContableController extends Controller
      */
     public function index(Request $id)
     {
-        if ($id->input('opt') == "All") {
-            $diarios = DB::table('diariocontable')
+        $diarios = DB::table('diariocontable')
                 ->join('naturaleza', 'diariocontable.IDNaturaleza', '=', 'naturaleza.ID')
                 ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
-                ->paginate(env("PAGINACION"));
+                ->paginate($id->input('psize'));
             return Response($diarios, 200);
-        } 
-        else {
-            $diarios = DB::table('diariocontable')
-                ->join('naturaleza', 'diariocontable.IDNaturaleza', '=', 'naturaleza.ID')
-                ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
-                ->where('diariocontable.ID', '=', $id->input('id'))
-                ->get();
-            return Response($diarios, 200);
-        }
     }
 
     /**
@@ -50,9 +40,10 @@ class DiarioContableController extends Controller
      */
     public function store(Request $request)
     {
-        $array[] = json_encode($request->all());
-        $diarios = DB::insert('CALL Ins_DiarioContable (?)', $array);
-        return json_encode($diarios);
+        $diario = Diariocontable::create($request->all());
+        $diario->Estado = $diario->Estado ? 'ACT' : 'INA';
+        $diario->save();
+        return Response($diario, 200);
     }
 
     /**
@@ -63,7 +54,12 @@ class DiarioContableController extends Controller
      */
     public function show($id)
     {
-        //
+        $diarios = DB::table('diariocontable')
+        ->join('naturaleza', 'diariocontable.IDNaturaleza', '=', 'naturaleza.ID')
+        ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
+        ->where('diariocontable.ID', '=', $id)
+        ->get();
+    return Response(json_encode($diarios), 200);
     }
 
     /**
@@ -84,11 +80,15 @@ class DiarioContableController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $array[] = json_encode($request->all());
-        $diarios = DB::update('CALL Upd_DiarioContable (?)', $array);
-        return json_encode($diarios);
+        $diarios = Diariocontable::find($id);
+        $diarios->Codigo = $request->input('Codigo');
+        $diarios->Etiqueta = $request->input('Etiqueta');
+        $diarios->IDNaturaleza = $request->input('IDNaturaleza');
+        $diarios->Estado = $request->input('Estado') ? 'ACT' : 'INA';
+        $diarios->save();
+        return Response($diarios, 200);
     }
 
     /**
@@ -99,7 +99,9 @@ class DiarioContableController extends Controller
      */
     public function destroy($id)
     {
-        $diarios = DB::delete('CALL Del_DiarioContable (?)', [$id]);
-        return json_encode($diarios);
+        $diarios = Diariocontable::find($id);
+        $diarios->Estado = 'INA';
+        $diarios->save(); 
+        return Response($diarios, 200);
     }
 }

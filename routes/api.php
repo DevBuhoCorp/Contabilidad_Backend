@@ -24,7 +24,7 @@ Route::apiresource('cuentacontable','CuentaContableController');
 Route::get('dragcuentacontable','CuentaContableController@drag');
 Route::get('numerocuenta','PlanContableController@numerocuenta');
 Route::get('cuentapadre','CuentaContableController@MaxPadre');
-
+Route::get('combomodelo','ModeloPlanContableController@Combo');
 
 Route::get('cuentacontable/{id}','CuentaContableController@show');
 

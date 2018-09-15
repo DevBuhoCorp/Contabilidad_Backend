@@ -17,8 +17,15 @@ class ModeloPlanContableController extends Controller
      */
     public function index(Request $id)
     {
-        $modelopc = DB::select('CALL Sel_ModeloPlanContable (?,?);', [$id->input('opt'), $id->input('id')]);
-        return json_encode($modelopc);
+       /* $modelopc = DB::select('CALL Sel_ModeloPlanContable (?,?);', [$id->input('opt'), $id->input('id')]);
+        return json_encode($modelopc);*/
+        $modelopc = new Modeloplancontable(); 
+        return Response($modelopc->paginate($id->input('psize')),200);
+    }
+
+    public function combo(Request $id)
+    {
+        return Response(Modeloplancontable::all(),200);
     }
 
     /**
@@ -39,9 +46,13 @@ class ModeloPlanContableController extends Controller
      */
     public function store(Request $request)
     {
-        $array [] = json_encode($request->all());
+       /* $array [] = json_encode($request->all());
         $modelopc = DB::insert('CALL Ins_ModeloPlanContable (?)',$array);
-        return json_encode($modelopc);
+        return json_encode($modelopc);*/
+        $modelopc = Modeloplancontable::create($request->all());
+        $modelopc->Estado = $modelopc->Estado ? 'ACT' : 'INA';
+        $modelopc->save();
+        return Response($modelopc, 200);
     }
 
     /**
@@ -52,7 +63,8 @@ class ModeloPlanContableController extends Controller
      */
     public function show($id)
     {
-        //
+        $modelopc = Modeloplancontable::find($id);
+        return Response($modelopc, 200);
     }
 
     /**
@@ -95,8 +107,9 @@ class ModeloPlanContableController extends Controller
     public function destroy($id)
     {
         $modelopc = Modeloplancontable::find($id);
-        $modelopc->delete();
-        return json_encode($modelopc);
+        $modelopc->Estado = 'INA';
+        $modelopc->save();
+        return Response($modelopc, 200);
 
     }
 }
