@@ -17,7 +17,6 @@ class PlanContableController extends Controller
      */
     public function index(Request $id)
     {
-        //$planc = DB::select('SELECT fn_PlanContable(0) data;');
         $planc = DB::select('SELECT fn_Sel_PlanContable(?,?) data;', [0, $id->input('id')]);
         return ($planc);
     }
@@ -90,7 +89,7 @@ class PlanContableController extends Controller
 
     public function numerocuenta(Request $request)
     {
-        $planc = DB::select('call getNumCuenta(?,?)', [$request->input('opt'), $request->input('id')]);
+        $planc = DB::select('call getNumCuenta(?,?)', [$request->input('padre'), $request->input('plancontable')]);
         return json_encode($planc);
     }
 

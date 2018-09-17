@@ -16,10 +16,15 @@ class DiarioContableController extends Controller
     public function index(Request $id)
     {
         $diarios = DB::table('diariocontable')
-                ->join('naturaleza', 'diariocontable.IDNaturaleza', '=', 'naturaleza.ID')
-                ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
-                ->paginate($id->input('psize'));
-            return Response($diarios, 200);
+            ->join('naturaleza', 'diariocontable.IDNaturaleza', '=', 'naturaleza.ID')
+            ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
+            ->paginate($id->input('psize'));
+        return Response($diarios, 200);
+    }
+
+    public function combo()
+    {
+        return response(DiarioContable::all(), 200);
     }
 
     /**
@@ -55,11 +60,11 @@ class DiarioContableController extends Controller
     public function show($id)
     {
         $diarios = DB::table('diariocontable')
-        ->join('naturaleza', 'diariocontable.IDNaturaleza', '=', 'naturaleza.ID')
-        ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
-        ->where('diariocontable.ID', '=', $id)
-        ->get();
-    return Response(json_encode($diarios), 200);
+            ->join('naturaleza', 'diariocontable.IDNaturaleza', '=', 'naturaleza.ID')
+            ->select(DB::raw('diariocontable.ID,diariocontable.Codigo,diariocontable.Etiqueta,diariocontable.Etiqueta as Naturaleza,diariocontable.Estado,naturaleza.ID as IDNaturaleza'))
+            ->where('diariocontable.ID', '=', $id)
+            ->get();
+        return Response(json_encode($diarios), 200);
     }
 
     /**
@@ -101,7 +106,7 @@ class DiarioContableController extends Controller
     {
         $diarios = Diariocontable::find($id);
         $diarios->Estado = 'INA';
-        $diarios->save(); 
+        $diarios->save();
         return Response($diarios, 200);
     }
 }

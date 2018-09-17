@@ -17,8 +17,9 @@ class CuentaContableController extends Controller
      */
     public function index(Request $id)
     {
-        $cuenta = DB::select('CALL Sel_CuentaContable (?,?);', [$id->input('opt'), $id->input('id')]);
-        return $cuenta;
+       /* $cuenta = DB::select('CALL Sel_CuentaContable (?,?);', [$id->input('opt'), $id->input('id')]);
+        return $cuenta;*/
+        return response(CuentaContable::all(),200);
     }
 
     /**
@@ -59,8 +60,9 @@ class CuentaContableController extends Controller
             $cuentaup->IDGrupoCuenta = 1;
             $cuentaup->save();
         } else {
-            $planC = Plancontable::where("IDModelo", $request->input("IDPlanContable"))->where("IDCuenta", $cuenta->ID)->get()[0];
-            $planC->ncuenta = $planC->ncuenta;
+//            $planC = Plancontable::where("IDModelo", $request->input("IDPlanContable"))->where("IDCuenta", $cuenta->ID)->get()[0];
+            $planC = Plancontable::where(["IDModelo" => $request->input("IDPlanContable"), "IDCuenta" => $cuenta->ID])->get()[0];
+            $planC->ncuenta = $planC->ncuenta + 1;
             $planC->save();
         }
 

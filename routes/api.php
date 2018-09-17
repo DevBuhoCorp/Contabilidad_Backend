@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::apiresource('diarios','DiarioContableController'); 
+Route::get('combodiario','DiarioContableController@combo');
 Route::apiresource('naturaleza','NaturalezaController'); 
 Route::apiresource('modeloplancontable','ModeloPlanContableController');    
 Route::apiresource('plancontable','PlanContableController');
@@ -36,6 +37,8 @@ Route::post('empresa/list','EmpresaController@listParams');
 
 Route::apiresource('aplicacion','AplicacionController');
 Route::post('aplicacion/list','AplicacionController@listParams');
+
+Route::apiresource('estacion','EstacionController');
 
 // API Aplicación
 Route::get('app/plancontable/cuentacontable','PlanContableController@apiPlanCuenta');
