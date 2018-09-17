@@ -59,14 +59,8 @@ class CuentaContableController extends Controller
             $cuentaup->IDGrupoCuenta = 1;
             $cuentaup->save();
         } else {
-<<<<<<< HEAD
             $planC = Plancontable::where("IDModelo", $request->input("IDPlanContable"))->where("IDCuenta", $cuenta->ID)->get()[0];
             $planC->ncuenta = $planC->ncuenta;
-=======
-//            $planC = Plancontable::where("IDModelo", $request->input("IDPlanContable"))->where("IDCuenta", $cuenta->ID)->get()[0];
-            $planC = Plancontable::where(["IDModelo" => $request->input("IDPlanContable"), "IDCuenta" => $cuenta->ID])->get()[0];
-            $planC->ncuenta = $planC->ncuenta + 1;
->>>>>>> origin/kbsg
             $planC->save();
         }
 
