@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Models\Naturaleza;
 
 class NaturalezaController extends Controller
 {
@@ -15,8 +15,7 @@ class NaturalezaController extends Controller
      */
     public function index()
     {
-        $naturaleza = DB::select('CALL Sel_Naturaleza ("All",0);');
-        return json_encode($naturaleza);
+        return Response(Naturaleza::all(),200);
     }
 
     /**

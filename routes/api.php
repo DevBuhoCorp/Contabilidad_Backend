@@ -17,6 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::apiresource('diarios','DiarioContableController'); 
+Route::get('combodiario','DiarioContableController@combo');
 Route::apiresource('naturaleza','NaturalezaController'); 
 Route::apiresource('modeloplancontable','ModeloPlanContableController');    
 Route::apiresource('plancontable','PlanContableController');
