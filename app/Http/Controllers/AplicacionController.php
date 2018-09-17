@@ -19,7 +19,7 @@ class AplicacionController extends Controller
         $apps = Aplicacion::
                 join('empresaaplicacion as eapp', 'eapp.IDAplicacion','=','aplicacion.ID')
                 ->where('eapp.IDEmpresa', $request->input('empresa'))
-                ->Paginate($request->input('psize'));
+                ->Paginate(3);
         return Response($apps,200);
     }
 
