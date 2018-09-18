@@ -17,9 +17,20 @@ class CuentaContableController extends Controller
      */
     public function index(Request $id)
     {
-       /* $cuenta = DB::select('CALL Sel_CuentaContable (?,?);', [$id->input('opt'), $id->input('id')]);
-        return $cuenta;*/
-        return response(CuentaContable::all(),200);
+        return response(CuentaContable::all(), 200);
+    }
+
+    public function autocomplete(Request $request)
+    {
+        $cuentas = PlanContable::join('cuentacontable', 'plancontable.IDCuenta', '=', 'cuentacontable.ID')
+            ->where('plancontable.IDModelo', $request->input('Modelo'))
+            ->select(DB::raw('cuentacontable.NumeroCuenta,cuentacontable.Etiqueta'))->get();
+            
+        $cuentas = $cuentas->map(function ($row) {
+            return $row['NumeroCuenta'] . ' ' . $row['Etiqueta'];
+
+        });
+        return response($cuentas, 200);
     }
 
     /**
@@ -101,10 +112,10 @@ class CuentaContableController extends Controller
 
     public function drag(Request $request)
     {
-        $cuentas = Cuentacontable::select('ID AS data','Etiqueta AS label')->whereNotExists(function ($query) use ($request) {
+        $cuentas = Cuentacontable::select('ID AS data', 'Etiqueta AS label')->whereNotExists(function ($query) use ($request) {
             $query->select(DB::raw(1))
                 ->from('plancontable')
-                ->whereRaw('IDModelo = ' . $request->input("id") )->whereRaw('cuentacontable.ID = IDCuenta');
+                ->whereRaw('IDModelo = ' . $request->input("id"))->whereRaw('cuentacontable.ID = IDCuenta');
         })->get();
 
         return Response()->json($cuentas, 200);

@@ -22,6 +22,7 @@ Route::apiresource('naturaleza','NaturalezaController');
 Route::apiresource('modeloplancontable','ModeloPlanContableController');    
 Route::apiresource('plancontable','PlanContableController');
 Route::apiresource('cuentacontable','CuentaContableController');
+Route::get('autocomplete','CuentaContableController@autocomplete');
 Route::get('dragcuentacontable','CuentaContableController@drag');
 Route::get('numerocuenta','PlanContableController@numerocuenta');
 Route::get('cuentapadre','CuentaContableController@MaxPadre');
