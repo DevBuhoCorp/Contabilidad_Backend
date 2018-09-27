@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Thu, 13 Sep 2018 22:19:14 +0000.
+ * Date: Tue, 25 Sep 2018 16:44:25 +0000.
  */
 
 namespace App\Models;
@@ -28,11 +28,9 @@ class Detalledoccontable extends Eloquent
 {
 	protected $table = 'detalledoccontable';
 	protected $primaryKey = 'ID';
-	public $incrementing = false;
 	public $timestamps = false;
 
 	protected $casts = [
-		'ID' => 'int',
 		'IDDocContable' => 'int',
 		'ValorUnitario' => 'float',
 		'Cantidad' => 'float',

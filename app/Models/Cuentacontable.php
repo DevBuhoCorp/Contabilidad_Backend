@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Thu, 13 Sep 2018 22:19:14 +0000.
+ * Date: Tue, 25 Sep 2018 16:44:25 +0000.
  */
 
 namespace App\Models;
@@ -28,7 +28,6 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property \Illuminate\Database\Eloquent\Collection $cuentacontables
  * @property \Illuminate\Database\Eloquent\Collection $cuentadefectos
  * @property \Illuminate\Database\Eloquent\Collection $cuentaimpuestos
- * @property \Illuminate\Database\Eloquent\Collection $detalletransaccions
  * @property \Illuminate\Database\Eloquent\Collection $listagrupopersonalizados
  * @property \Illuminate\Database\Eloquent\Collection $plancontables
  *
@@ -90,11 +89,6 @@ class Cuentacontable extends Eloquent
 	public function cuentaimpuestos()
 	{
 		return $this->hasMany(\App\Models\Cuentaimpuesto::class, 'IDCuenta');
-	}
-
-	public function detalletransaccions()
-	{
-		return $this->hasMany(\App\Models\Detalletransaccion::class, 'IDCuenta');
 	}
 
 	public function listagrupopersonalizados()
