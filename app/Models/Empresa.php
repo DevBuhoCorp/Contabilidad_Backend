@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Tue, 25 Sep 2018 16:44:25 +0000.
+ * Date: Thu, 18 Oct 2018 19:50:53 +0000.
  */
 
 namespace App\Models;
@@ -15,8 +15,19 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property int $ID
  * @property string $Descripcion
  * @property string $Observacion
+ * @property string $RUC
+ * @property string $RazonSocial
+ * @property string $NombreComercial
+ * @property string $TipoContribuyente
+ * @property bool $ObligContabilidad
+ * @property bool $ContEspecial
+ * @property string $Direccion
+ * @property string $Telefono
+ * @property string $Celular
+ * @property string $Email
  * @property string $Estado
  * 
+ * @property \Illuminate\Database\Eloquent\Collection $cuentabancaria
  * @property \Illuminate\Database\Eloquent\Collection $aplicacions
  *
  * @package App\Models
@@ -27,11 +38,31 @@ class Empresa extends Eloquent
 	protected $primaryKey = 'ID';
 	public $timestamps = false;
 
+	protected $casts = [
+		'ObligContabilidad' => 'bool',
+		'ContEspecial' => 'bool'
+	];
+
 	protected $fillable = [
 		'Descripcion',
 		'Observacion',
+		'RUC',
+		'RazonSocial',
+		'NombreComercial',
+		'TipoContribuyente',
+		'ObligContabilidad',
+		'ContEspecial',
+		'Direccion',
+		'Telefono',
+		'Celular',
+		'Email',
 		'Estado'
 	];
+
+	public function cuentabancaria()
+	{
+		return $this->hasMany(\App\Models\Cuentabancarium::class, 'IDEmpresa');
+	}
 
 	public function aplicacions()
 	{

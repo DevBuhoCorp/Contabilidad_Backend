@@ -10,30 +10,29 @@ namespace App\Models;
 use Reliese\Database\Eloquent\Model as Eloquent;
 
 /**
- * Class Tipocuentabancarium
+ * Class Tipoestado
  * 
  * @property int $ID
- * @property string $Descripcion
- * @property string $Observacion
+ * @property string $Etiqueta
  * @property string $Estado
  * 
- * @property \Illuminate\Database\Eloquent\Collection $cuentabancaria
+ * @property \Illuminate\Database\Eloquent\Collection $cuentacontables
  *
  * @package App\Models
  */
-class Tipocuentabancarium extends Eloquent
+class Tipoestado extends Eloquent
 {
+	protected $table = 'tipoestado';
 	protected $primaryKey = 'ID';
 	public $timestamps = false;
 
 	protected $fillable = [
-		'Descripcion',
-		'Observacion',
+		'Etiqueta',
 		'Estado'
 	];
 
-	public function cuentabancaria()
+	public function cuentacontables()
 	{
-		return $this->hasMany(\App\Models\Cuentabancarium::class, 'IDTipoCuenta');
+		return $this->hasMany(\App\Models\Cuentacontable::class, 'IDTipoEstado');
 	}
 }

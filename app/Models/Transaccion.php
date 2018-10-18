@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Tue, 25 Sep 2018 16:44:25 +0000.
+ * Date: Thu, 18 Oct 2018 19:50:53 +0000.
  */
 
 namespace App\Models;
@@ -15,6 +15,11 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property int $ID
  * @property \Carbon\Carbon $Fecha
  * @property int $IDEstacion
+ * @property int $IDEmpresa
+ * @property string $Etiqueta
+ * @property float $Debe
+ * @property float $Haber
+ * @property string $Estado
  * 
  * @property \App\Models\Estacion $estacion
  * @property \Illuminate\Database\Eloquent\Collection $detalletransaccions
@@ -29,7 +34,10 @@ class Transaccion extends Eloquent
 	public $timestamps = false;
 
 	protected $casts = [
-		'IDEstacion' => 'int'
+		'IDEstacion' => 'int',
+		'IDEmpresa' => 'int',
+		'Debe' => 'float',
+		'Haber' => 'float'
 	];
 
 	protected $dates = [
@@ -38,7 +46,12 @@ class Transaccion extends Eloquent
 
 	protected $fillable = [
 		'Fecha',
-		'IDEstacion'
+		'IDEstacion',
+		'IDEmpresa',
+		'Etiqueta',
+		'Debe',
+		'Haber',
+		'Estado'
 	];
 
 	public function estacion()

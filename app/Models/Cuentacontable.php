@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Tue, 25 Sep 2018 16:44:25 +0000.
+ * Date: Thu, 18 Oct 2018 19:50:53 +0000.
  */
 
 namespace App\Models;
@@ -20,11 +20,12 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * @property string $Estado
  * @property float $Saldo
  * @property int $IDDiario
+ * @property int $IDTipoEstado
  * 
+ * @property \App\Models\Tipoestado $tipoestado
  * @property \App\Models\Cuentacontable $cuentacontable
  * @property \App\Models\Diariocontable $diariocontable
  * @property \App\Models\Grupocuentum $grupocuentum
- * @property \Illuminate\Database\Eloquent\Collection $cuentabancaria
  * @property \Illuminate\Database\Eloquent\Collection $cuentacontables
  * @property \Illuminate\Database\Eloquent\Collection $cuentadefectos
  * @property \Illuminate\Database\Eloquent\Collection $cuentaimpuestos
@@ -43,7 +44,8 @@ class Cuentacontable extends Eloquent
 		'IDGrupoCuenta' => 'int',
 		'IDPadre' => 'int',
 		'Saldo' => 'float',
-		'IDDiario' => 'int'
+		'IDDiario' => 'int',
+		'IDTipoEstado' => 'int'
 	];
 
 	protected $fillable = [
@@ -53,8 +55,14 @@ class Cuentacontable extends Eloquent
 		'IDPadre',
 		'Estado',
 		'Saldo',
-		'IDDiario'
+		'IDDiario',
+		'IDTipoEstado'
 	];
+
+	public function tipoestado()
+	{
+		return $this->belongsTo(\App\Models\Tipoestado::class, 'IDTipoEstado');
+	}
 
 	public function cuentacontable()
 	{
@@ -69,11 +77,6 @@ class Cuentacontable extends Eloquent
 	public function grupocuentum()
 	{
 		return $this->belongsTo(\App\Models\Grupocuentum::class, 'IDGrupoCuenta');
-	}
-
-	public function cuentabancaria()
-	{
-		return $this->hasMany(\App\Models\Cuentabancarium::class, 'IDCuenta');
 	}
 
 	public function cuentacontables()

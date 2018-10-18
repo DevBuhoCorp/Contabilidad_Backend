@@ -2,7 +2,7 @@
 
 /**
  * Created by Reliese Model.
- * Date: Tue, 25 Sep 2018 16:44:25 +0000.
+ * Date: Thu, 18 Oct 2018 19:50:53 +0000.
  */
 
 namespace App\Models;
@@ -19,7 +19,7 @@ use Reliese\Database\Eloquent\Model as Eloquent;
  * 
  * @property \App\Models\Cuentacontable $cuentacontable
  * @property \App\Models\Modeloplancontable $modeloplancontable
- * @property \App\Models\Detalletransaccion $detalletransaccion
+ * @property \Illuminate\Database\Eloquent\Collection $detalletransaccions
  *
  * @package App\Models
  */
@@ -51,8 +51,8 @@ class Plancontable extends Eloquent
 		return $this->belongsTo(\App\Models\Modeloplancontable::class, 'IDModelo');
 	}
 
-	public function detalletransaccion()
+	public function detalletransaccions()
 	{
-		return $this->belongsTo(\App\Models\Detalletransaccion::class, 'ID', 'IDCuenta');
+		return $this->hasMany(\App\Models\Detalletransaccion::class, 'IDCuenta');
 	}
 }
